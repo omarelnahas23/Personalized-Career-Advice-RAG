@@ -414,8 +414,49 @@ Note here the generator_llm and critic_llm is GPT-4-turbo model<br>
 
 The generator_LLM and critic_LLM work in an iterative loop:<br>
 
-1. The generator_LLM proposes a new question.
-2. The critic_LLM evaluates the question for quality.
-3. If the question passes the critic_LLM's evaluation, it is added to the test set.
-4. If the question fails, the generator_LLM is prompted to modify or generate a new question.
-5. This back-and-forth process continues until the desired number of high-quality, diverse questions are generated for the test set.
+1. The generator_LLM proposes a new question.<br>
+2. The critic_LLM evaluates the question for quality.<br>
+3. If the question passes the critic_LLM's evaluation, it is added to the test set.<br>
+4. If the question fails, the generator_LLM is prompted to modify or generate a new question.<br>
+5. This back-and-forth process continues until the desired number of high-quality, diverse questions are generated for the test set.<br>
+<br><br>
+## **Evaluation Metrics**
+
+
+1. [**Faithfulness**](https://docs.ragas.io/en/stable/concepts/metrics/faithfulness.html): <br>
+![](https://github.com/omarelnahas23/Personalized-Career-Advice-RAG/blob/main/assets/faithfullness.png) <br>
+2. [**Answer Relevancy**](https://docs.ragas.io/en/stable/concepts/metrics/answer_relevance.html): <br>
+![](https://github.com/omarelnahas23/Personalized-Career-Advice-RAG/blob/main/assets/Answer%20Relevancy.png) <br>
+3. [**Context Precision**](https://docs.ragas.io/en/stable/concepts/metrics/context_precision.html): <br>
+![](https://github.com/omarelnahas23/Personalized-Career-Advice-RAG/blob/main/assets/Context%20Precision.png) <br>
+4. [**Context Recall**](https://docs.ragas.io/en/stable/concepts/metrics/context_recall.html): <br>
+![](https://github.com/omarelnahas23/Personalized-Career-Advice-RAG/blob/main/assets/Context%20Recall.png) <br>
+5. [**Answer Correctness**](https://docs.ragas.io/en/stable/concepts/metrics/answer_correctness.html): <br>
+![](https://github.com/omarelnahas23/Personalized-Career-Advice-RAG/blob/main/assets/Answer%20Correctness.png) <br>
+<br><br>
+can be imported using regas 0.1.0 like this:<br>
+```python
+from ragas import evaluate
+from ragas.metrics import (
+    faithfulness,
+    answer_relevancy,
+    answer_correctness,
+    context_recall,
+    context_precision,
+)
+
+metrics = [
+    faithfulness,
+    answer_relevancy,
+    context_recall,
+    context_precision,
+    answer_correctness,
+]
+```
+<br><br>
+## **Evaluation Results**
+There were 4 RAGs Chains Tested:<br>
+1. **Gemma2 + HyDE**
+2. **Gemma2 + Hybrid Search + Cohere Reranker**
+3. **LLama3 + HyDE**
+4. **LLama3 + Hybrid Search + Cohere Reranker**
