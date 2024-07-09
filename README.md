@@ -456,7 +456,17 @@ metrics = [
 <br><br>
 ## **Evaluation Results**
 There were 4 RAGs Chains Tested:<br>
-1. **Gemma2 + HyDE**
-2. **Gemma2 + Hybrid Search + Cohere Reranker**
-3. **LLama3 + HyDE**
-4. **LLama3 + Hybrid Search + Cohere Reranker**
+1. **Gemma2 + HyDE** <br>
+2. **Gemma2 + Hybrid Search + Cohere Reranker** <br>
+3. **LLama3 + HyDE** <br>
+4. **LLama3 + Hybrid Search + Cohere Reranker** <br>
+<br><br>
+Results are as follows:<br>
+![](https://github.com/omarelnahas23/Personalized-Career-Advice-RAG/blob/main/assets/Hybrid%20Results.png)
+<br><br>
+![](https://github.com/omarelnahas23/Personalized-Career-Advice-RAG/blob/main/assets/HyDE%20results.png)
+<br><br>
+**LLama3 + HyDE** Showed best performance in Faithfulness, Context Recall, Context Precision <br>
+**LLama3 Hybrid ReRank** Showed best performance Answer Relevancy<br>
+**Gemma2 + HyDE** Showed best performance same with **LLama3 + HyDE** in  Context Precision<br>
+**Gemma2 + HyDE** Showed best performance in  Answer Correctness<br>
