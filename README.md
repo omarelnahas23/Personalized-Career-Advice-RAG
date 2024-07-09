@@ -466,7 +466,7 @@ Results are as follows:<br>
 <br><br>
 ![](https://github.com/omarelnahas23/Personalized-Career-Advice-RAG/blob/main/assets/HyDE%20results.png)
 <br><br>
-**LLama3 + HyDE** Showed best performance in Faithfulness, Context Recall, Context Precision <br>
-**LLama3 Hybrid ReRank** Showed best performance Answer Relevancy<br>
-**Gemma2 + HyDE** Showed best performance same with **LLama3 + HyDE** in  Context Precision<br>
-**Gemma2 + HyDE** Showed best performance in  Answer Correctness<br>
+**LLama3 + HyDE** Showed best performance in **Faithfulness**, **Context Recall**, **Context Precision** <br>
+**LLama3 Hybrid ReRank** Showed best performance **Answer Relevancy**<br>
+**Gemma2 + HyDE** Showed best performance same with **LLama3 + HyDE** in  **Context Precision**<br>
+**Gemma2 + HyDE** Showed best performance in  **Answer Correctness**<br>
