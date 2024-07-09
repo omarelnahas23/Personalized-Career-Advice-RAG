@@ -341,4 +341,81 @@ compressed_prompt = llm_lingua.compress_prompt(
 # **Evaluation of Pipelines Using [RAGAs](https://docs.ragas.io/en/latest/getstarted/index.html)**
 ![](https://github.com/omarelnahas23/Personalized-Career-Advice-RAG/blob/main/assets/Screenshot_1.png)
 
+First of all, There are 2 models I am using for this evaluation in RAG Chain:<br>
+1. **[Gemma 2 9B](https://blog.google/technology/developers/google-gemma-2/)**:<br>
+![](https://github.com/omarelnahas23/Personalized-Career-Advice-RAG/blob/main/assets/Gemma2.png)
+<br><br>
+3.  **[LLama3 8B](https://ai.meta.com/blog/meta-llama-3/)**:<br>
+![](https://github.com/omarelnahas23/Personalized-Career-Advice-RAG/blob/main/assets/LLama3.png)
+<br><br>
 
+## **Synthetic Test Set Generation**
+We can leverage Ragas' [`Synthetic Test Data generation`](https://docs.ragas.io/en/stable/concepts/testset_generation.html) functionality to generate our own synthetic QC pairs - as well as a synthetic ground truth - quite easily!
+<br><br>
+![](https://github.com/omarelnahas23/Personalized-Career-Advice-RAG/blob/main/assets/SynTest.png)
+<br><br>
+
+Ragas is a novel approach to evaluation data generation that uses an evolutionary paradigm to create diverse samples of questions with varying difficulty levels. This method helps ensure comprehensive coverage of the performance of various components within a pipeline, resulting in a more robust evaluation process.<br>
+
+The system works by taking a seed question and evolving it through a series of steps, each of which adds a new layer of complexity. These steps include:<br>
+
+1. **Reasoning**: Rewriting the question to enhance the need for reasoning.<br>
+2. **Conditioning**: Modifying the question to introduce a conditional element.<br>
+3. **Multi-Context**: Rephrasing the question to require information from multiple related sections.<br>
+
+The system also includes the ability to create conversational questions, which simulate a chat-based question-and-follow-up interaction.<br>
+
+This process ensures that the generated test data is more representative of the questions that will be encountered in production, and therefore leads to a more accurate evaluation of the performance of LLMs.<br>
+The Generation of the Synthetic Test Set is based on OpenAI GPT models so you need to have an api_key <br>
+
+```python
+from ragas.testset.generator import TestsetGenerator
+from ragas.testset.evolutions import simple, reasoning, multi_context
+import os
+os.environ["OPENAI_API_KEY"] = "<OpenAi-Key>"
+
+import pandas as pd
+df = pd.read_csv("sampled_jobs.csv")
+df = df.dropna(ignore_index=True) # Droping sample jobs positing that any nan value in any of its columns
+df.to_csv("test.csv",index=False)
+docs = CSVLoader("test.csv").load()
+
+doc_splits_test = text_splitter.split_documents(docs)
+from ragas.testset.generator import TestsetGenerator
+from ragas.testset.evolutions import simple, reasoning, multi_context
+import random
+generator = TestsetGenerator.with_openai("gpt-4-turbo","gpt-4-turbo")
+
+testset = generator.generate_with_langchain_docs(random.choices(doc_splits_test,k=20), test_size=10, distributions={simple: 0.5, reasoning: 0.25, multi_context: 0.25})
+```
+<br><br>
+Note here the generator_llm and critic_llm is GPT-4-turbo model<br>
+1. **Generator_LLM**:
+
+**Purpose**: This LLM is responsible for generating new questions based on the provided documents. It takes as input the "seed question" and uses its vast knowledge and language understanding capabilities to create variations and complexities in the question. <br>
+**Methods**: The generator_LLM might employ techniques like:<br>
+    1. **Paraphrasing**: Rewording the original question to create different phrasing while retaining the core meaning.<br>
+    2. **Adding Context**: Incorporating additional information or constraints into the question.<br>
+    3. **Introducing Reasoning**: Making the question requires logical deductions or inferences to answer.<br>
+
+2. **Critic_LLM**:
+
+**Purpose**: This LLM acts as an evaluator, judging the quality of the generated questions. Its goal is to ensure that the generated questions are:<br>
+        1. **Answerable**: The question can be answered based on the provided documents.<br>
+        2. **Relevant**: The question remains aligned with the topic of the documents.<br>
+        3. **Challenging**: The question requires some level of reasoning or understanding.<br>
+
+**Methods**: The critic_LLM might use techniques like:<br>
+        1. **Fact Checking**: Assessing if the generated question aligns with the information within the documents.<br>
+        2. **Logical Analysis**: Evaluating the reasoning and coherence required to answer the question.<br>
+        3. **Language Quality**: Checking for grammatical correctness and clarity in the generated question.<br>
+<br><br>
+**The Process**:<br>
+
+The generator_LLM and critic_LLM work in an iterative loop:<br>
+
+1. The generator_LLM proposes a new question.
+2. The critic_LLM evaluates the question for quality.
+3. If the question passes the critic_LLM's evaluation, it is added to the test set.
+4. If the question fails, the generator_LLM is prompted to modify or generate a new question.
+5. This back-and-forth process continues until the desired number of high-quality, diverse questions are generated for the test set.
