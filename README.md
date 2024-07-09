@@ -96,5 +96,59 @@ embd = HuggingFaceEmbeddings(
 # **Vectorstore Creation and loading using Milvus**
 ![](https://github.com/omarelnahas23/Personalized-Career-Advice-RAG/blob/main/assets/998c09ca-cfa6-4c01-ac75-3dfad7f4862b.png)
 <br>
-**Milvus** stands out as the most comprehensive solution among the databases evaluated, meeting all the essential criteria and outperforming other open-source options
+**Milvus** stands out as the most comprehensive solution among the databases evaluated, meeting all the essential criteria and outperforming other open-source options<br><br>
 ![](https://github.com/omarelnahas23/Personalized-Career-Advice-RAG/blob/main/assets/VectorDB%20Comparision.png)
+
+<br>
+
+In The Notebook Shared on Google Colab Pro Nivida T4 It takes 30+ mins to create Vectorstore
+```markdown
+from langchain_community.document_loaders import CSVLoader
+from langchain_milvus import Milvus
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+docs = CSVLoader("sampled_jobs.csv").load()
+
+text_splitter = RecursiveCharacterTextSplitter.from_tiktoken_encoder(
+    chunk_size=2000, chunk_overlap=0
+)
+doc_splits = text_splitter.split_documents(docs)
+
+vectorstore = Milvus.from_documents(  
+    documents=doc_splits,
+    embedding=embd,
+
+    connection_args={
+        "uri": "./milvus_demo.db",
+    },
+    drop_old=True,  # Drop the old Milvus collection if it exists
+
+)
+
+```
+<br><br>
+
+I already shared in the notebook the SampleJobs_DB.db generated VectorStore so no need to recreate it if you are testing my code <br>
+
+```markdown
+#download the vectorestore using gdown
+gdown https://drive.google.com/uc?id=1-8p5GHC8eZCJUU54Zwg-iUW8FasGtatr
+#Load the vectorstore
+from milvus import default_server
+default_server.start() # Start Milvus Server in order to load the store vectorstore
+
+from langchain_milvus import Milvus
+
+vectorstore = Milvus(
+    embd,
+    connection_args={"uri": "SampleJobs_DB.db"},
+)
+```
+
+<br>
+After Loading we can use Milvus reteriver<br>
+
+```markdown
+Milvus_retriever = vectorstore.as_retriever(search_kwargs={"k": 1}) # k here is the number of retrieved job posting here I use the best single match feel free to exercise with more job postings
+```
+<br><br>
+
