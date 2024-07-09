@@ -35,16 +35,16 @@ I am utilizing the [LangChain](https://www.langchain.com/) Framework for buildin
 # **LLM-Embedder**
 ![](https://github.com/omarelnahas23/Personalized-Career-Advice-RAG/blob/main/assets/llm-embedder.png)
 <br> <br> 
-LLMs face a series of challenges, including
-issues such as hallucination [10, 33], instruction following [7, 58],
-and handling long contexts [2, 8]. Many of these challenges can be
+LLMs face a series of challenges, including<br>
+issues such as hallucination , instruction following <br>
+and handling long contexts . Many of these challenges can be
 traced back to the inherent limitations of LLMs, with three critical
-boundaries deserving attention.
+boundaries deserving attention.<br>
 • **Knowledge boundary**. LLMs are constrained by their knowledge capacity. Due to finite model parameters, they cannot fully
 internalize the vast body of world knowledge. Moreover, the internal knowledge of LLMs is static and difficult to be updated with
 the dynamically evolving world. Furthermore, LLMs are predominantly trained on publicly available, high-frequency data, which
 may result in inaccuracies when dealing with domain-specific or
-long-tail knowledge.
+long-tail knowledge.<br>
 • **Memory boundary**. LLMs also grapple with severe limitations
 in memory, primarily due to restrictions on context length. While
 advances have been continually made in expanding the maximum
@@ -52,10 +52,10 @@ context length, it still falls short of achieving the goal of lifelong
 engagement with human users. Additionally, both the training and
 deployment of LLMs with extended context can be prohibitively
 computationally and storage-intensive, making it impractical to
-significantly expand their memory.
+significantly expand their memory.<br>
 • **Capability boundary**. LLMs’ capabilities are constrained
 in terms of action and autonomy. Firstly, they are limited to the
 ’language space’ and cannot meaningfully interact with the physical
 world. Secondly, these models heavily rely on human guidance,
 requiring clear user instructions and appropriate demonstration
-examples to perform specific tasks effectively.
+examples to perform specific tasks effectively.<br>
