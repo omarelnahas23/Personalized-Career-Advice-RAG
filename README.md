@@ -14,12 +14,12 @@ the solution is the RAG System for personal career advice based on sampled Wuzzu
 # **Installing Dependencies**
 either you follow the installation on the notebook<br>
 or you can install it if you are working on a local machine using 
-```markdown
+```console
 
 pip install -r requirements.txt
 ```
 install Ollama and pull models
-```markdown
+```console
 
 curl -fsSL https://ollama.com/install.sh | sh
 ollama serve
@@ -81,7 +81,7 @@ and tool-bench, to execute complex tasks. By consolidating these functionalities
 of effect, the unified model may also benefit from the composite data of different scenarios. This can be especially helpful for retrieval tasks where high-quality training data is scarce <br>
 
 Here is how LLM Embedder is loaded to the RAG Chain:<br>
-```markdown
+```python
 from langchain_huggingface.embeddings import HuggingFaceEmbeddings
 
 model_name = "BAAI/llm-embedder"
@@ -102,7 +102,7 @@ embd = HuggingFaceEmbeddings(
 <br>
 
 In The Notebook Shared on Google Colab Pro Nivida T4 It takes 30+ mins to create Vectorstore
-```markdown
+```python
 from langchain_community.document_loaders import CSVLoader
 from langchain_milvus import Milvus
 from langchain_text_splitters import RecursiveCharacterTextSplitter
@@ -129,9 +129,9 @@ vectorstore = Milvus.from_documents(
 
 I already shared in the notebook the SampleJobs_DB.db generated VectorStore so no need to recreate it if you are testing my code <br>
 
-```markdown
+```python
 #download the vectorestore using gdown
-gdown https://drive.google.com/uc?id=1-8p5GHC8eZCJUU54Zwg-iUW8FasGtatr
+!gdown https://drive.google.com/uc?id=1-8p5GHC8eZCJUU54Zwg-iUW8FasGtatr
 #Load the vectorstore
 from milvus import default_server
 default_server.start() # Start Milvus Server in order to load the store vectorstore
@@ -147,7 +147,7 @@ vectorstore = Milvus(
 <br>
 After Loading we can use Milvus reteriver<br>
 
-```markdown
+```python
 Milvus_retriever = vectorstore.as_retriever(search_kwargs={"k": 1}) # k here is the number of retrieved job postings here I use the best single match feel free to exercise with more job postings
 ```
 <br><br>
