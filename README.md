@@ -15,12 +15,12 @@ the solution is the RAG System for personal career advice based on sampled Wuzzu
 either you follow the installation on the notebook<br>
 or you can install it if you are working on a local machine using 
 ```markdown
-```python
+
 pip install -r requirements.txt
 ```
 install Ollama and pull models
 ```markdown
-```shell
+
 curl -fsSL https://ollama.com/install.sh | sh
 ollama serve
 ollama pull llama3 #Pulls LLama3 8B
