@@ -27,4 +27,7 @@ ollama pull llama3 #Pulls LLama3 8B
 ollama pull gemma2 #Pulls New model Gemma2 9b
 
 ```
-# 
+# **LangChain Framework**
+![](https://github.com/omarelnahas23/Personalized-Career-Advice-RAG/blob/main/assets/LangChain.png)
+<br> <br> 
+I am utilizing the [LangChain](https://www.langchain.com/) Framework for building RAG Chain taking advantage of its ease of use and stable performance 
