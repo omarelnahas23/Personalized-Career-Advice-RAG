@@ -206,11 +206,100 @@ description: Welcome to Network Consultancy Services (NCS), an esteemed Informat
 requirements: 
 career_level: Entry Level
 ```
+<br><br>
+
+
+# **Improving RAG Chain with Hybrid Search + Cohere Rerank**
+**BM25** is a sophisticated ranking function used in information retrieval. Acting like a highly efficient librarian, it excels in navigating through extensive collections of documents. Its effectiveness lies in term Frequency: Evaluating how often search terms appear in each document. Document Length Normalization: Ensuring a fair chance for both short and long documents in search results. Bias-Free Information Retrieval: Ideal for large data sets where unbiased results are critical.<br>
+
+
+**BM25 Retriever** - Sparse retriever <br>
+
+**Embeddings** - Dense retrievers Milvus <br>
+
+`Hybrid search = Sparse + Dense retriever`<br>
+
+```python
+
+from langchain.retrievers import BM25Retriever, EnsembleRetriever
+from langchain.schema import Document
+
+
+# Initialize the BM25 retriever
+bm25_retriever = BM25Retriever.from_documents(doc_splits)
+bm25_retriever.k = 1  
+
+# Initialize the ensemble retriever
+ensemble_retriever = EnsembleRetriever(
+    retrievers=[bm25_retriever, Milvus_retriever], weights=[0.2, 0.8] # Retrieve top 2 results
+)
+
+# Example customer query
+question = "Senior Machine Learning Engineer"
+
+
+# Retrieve relevant documents/products
+docs = ensemble_retriever.get_relevant_documents(question)
+
+# Extract and print only the page content from each document
+pretty_print_docs(docs)
 
 
 
+```
+
+<br><br>
+output
+```console
+Document 1:
+
+job_title: Senior Machine Learning Engineer
+description: Siemens Digital Industries (DI) is an innovation leader in automation and digitalization. Closely, collaborating with partners and customers, we care about the digital transformation in the process and discrete industries. With our Digital Enterprise portfolio, we provide and encourage companies of all sizes with an end-to-end set of products, solutions and services to integrate and digitalize the entire value chain. Meaningful optimization for the specific needs of each industry, our outstanding portfolio supports customers to achieve greater efficiency and flexibility. We are constantly adding innovations to its portfolio to integrate groundbreaking future technologies. We have our global headquarters in Nuremberg, Germany, and have around 75,000 employees internationally.Are you passionate about advancing machine learning and software engineering? Join our Calibre SONR team in Cairo, Egypt, as a Senior Software Engineer / Technical Lead.Calibre SONR seamlessly integrates machine-learning models with the core Calibre architecture to enhance the productivity and precision of fab defect detection and diagnostics. This role offers a truly global scope and presents the opportunity to drive continuous improvement in one of our most critical services.ResponsibilitiesDesign, develop, and implement software programming for both internal and external products, exceeding customer expectations with a focus on quality and on-time delivery.Ensure the overall functional quality of released products across all platforms and mechanisms.Lead major projects within the product area, providing technical guidance and promoting innovation.Consult with customers on future upgrades and products, influencing technical direction.Provide high-level technical expertise, including in-depth software systems programming and analysis.Mentor junior engineers, demonstrating independence and technical expertise.QualificationsBachelor’s or Master’s degree in Computer Science, Computer Engineering, or a related field.+8 years of experience in software development, with a specialization in data analysis and machine learning.Proficiency in programming languages such as Python, Java, or C++.Experience with machine learning frameworks (e.g., TensorFlow, PyTorch).Strong understanding of data structures, algorithms, and software design principles.Excellent problem-solving skills and attention to detail.Highly developed communication skills, with the ability to present ideas and share knowledge effectively.Why us?Working at Siemens Software means flexibility - Choosing between working at home and the office at other times is the norm here. We offer great benefits and rewards, as you'd expect from a world leader in industrial software.We are an equal opportunity employer and value diversity at our company. We do not discriminate on the basis of race, religion, color, national origin, sex, gender, gender expression, sexual orientation, age, marital status, veteran status, or disability status.At Siemens, we are always challenging ourselves to build a better future. We need the most innovative and diverse Digital Minds to develop tomorrow‘s reality.Siemens Industry Software is an equal opportunities employer and does not discriminate unlawfully on the grounds of age, disability, gender assignment, marriage, and civil partnership, pregnancy and maternity, race, religion or belief, sex, sexual orientation, or trade union membership.If you want to make a difference – make it with us!
+requirements: 
+career_level: Not specified
+----------------------------------------------------------------------------------------------------
+Document 2:
+
+job_title: Senior AI Researcher
+description: <p>- Conduct state-of-the-art research in AI & Deep/Machine Learning applications in the field of Educational Technology<br>- Implement and prototype AI research ideas on Web & Mobile applications<br>- Innovate solutions in the domain of Educational Technology<br>- Publish research papers when requested<br>- [Senior] Mentors peers</p>
+requirements: <p>- BSc in one of these fields: Computer Science, Computer Engineering, Electronics and Communications, Mechatronics, Biomedical or Bioinformatics<br>- MSc/PhD or enrollment in a&nbsp;post-graduate program (MSc/PhD) with focus on Deep Learning/Machine Learning is a plus<br>- 3+ years of relevant experience<br>- Strong Machine Learning background<br>- Deep Learning background<br>- Web &amp; Mobile App development background is a plus<br>- Experience in Machine Learning Cloud Deployment is a plus<br>&nbsp;</p>
+career_level: Experienced (Non-Manager)
+```
+
+
+# **Using Reranking with [Cohere Reranker](https://cohere.com/rerank)**
+```python
+cohere_api_key = "<Your_API_Key>"
+from langchain.retrievers.contextual_compression import ContextualCompressionRetriever
+from langchain_cohere import CohereRerank
+from langchain_community.llms import Cohere
 
 
 
+compressor = CohereRerank(cohere_api_key=cohere_api_key)
+compression_retriever = ContextualCompressionRetriever(
+    base_compressor=compressor, base_retriever=ensemble_retriever
+)
 
+compressed_docs = compression_retriever.invoke(
+    question
+)
+pretty_print_docs(compressed_docs)
+```
+<br><br>
+output
+```console
+Document 1:
 
+job_title: Senior Machine Learning Engineer
+description: Siemens Digital Industries (DI) is an innovation leader in automation and digitalization. Closely, collaborating with partners and customers, we care about the digital transformation in the process and discrete industries. With our Digital Enterprise portfolio, we provide and encourage companies of all sizes with an end-to-end set of products, solutions and services to integrate and digitalize the entire value chain. Meaningful optimization for the specific needs of each industry, our outstanding portfolio supports customers to achieve greater efficiency and flexibility. We are constantly adding innovations to its portfolio to integrate groundbreaking future technologies. We have our global headquarters in Nuremberg, Germany, and have around 75,000 employees internationally.Are you passionate about advancing machine learning and software engineering? Join our Calibre SONR team in Cairo, Egypt, as a Senior Software Engineer / Technical Lead.Calibre SONR seamlessly integrates machine-learning models with the core Calibre architecture to enhance the productivity and precision of fab defect detection and diagnostics. This role offers a truly global scope and presents the opportunity to drive continuous improvement in one of our most critical services.ResponsibilitiesDesign, develop, and implement software programming for both internal and external products, exceeding customer expectations with a focus on quality and on-time delivery.Ensure the overall functional quality of released products across all platforms and mechanisms.Lead major projects within the product area, providing technical guidance and promoting innovation.Consult with customers on future upgrades and products, influencing technical direction.Provide high-level technical expertise, including in-depth software systems programming and analysis.Mentor junior engineers, demonstrating independence and technical expertise.QualificationsBachelor’s or Master’s degree in Computer Science, Computer Engineering, or a related field.+8 years of experience in software development, with a specialization in data analysis and machine learning.Proficiency in programming languages such as Python, Java, or C++.Experience with machine learning frameworks (e.g., TensorFlow, PyTorch).Strong understanding of data structures, algorithms, and software design principles.Excellent problem-solving skills and attention to detail.Highly developed communication skills, with the ability to present ideas and share knowledge effectively.Why us?Working at Siemens Software means flexibility - Choosing between working at home and the office at other times is the norm here. We offer great benefits and rewards, as you'd expect from a world leader in industrial software.We are an equal opportunity employer and value diversity at our company. We do not discriminate on the basis of race, religion, color, national origin, sex, gender, gender expression, sexual orientation, age, marital status, veteran status, or disability status.At Siemens, we are always challenging ourselves to build a better future. We need the most innovative and diverse Digital Minds to develop tomorrow‘s reality.Siemens Industry Software is an equal opportunities employer and does not discriminate unlawfully on the grounds of age, disability, gender assignment, marriage, and civil partnership, pregnancy and maternity, race, religion or belief, sex, sexual orientation, or trade union membership.If you want to make a difference – make it with us!
+requirements: 
+career_level: Not specified
+----------------------------------------------------------------------------------------------------
+Document 2:
+
+job_title: Senior AI Researcher
+description: <p>- Conduct state-of-the-art research in AI & Deep/Machine Learning applications in the field of Educational Technology<br>- Implement and prototype AI research ideas on Web & Mobile applications<br>- Innovate solutions in the domain of Educational Technology<br>- Publish research papers when requested<br>- [Senior] Mentors peers</p>
+requirements: <p>- BSc in one of these fields: Computer Science, Computer Engineering, Electronics and Communications, Mechatronics, Biomedical or Bioinformatics<br>- MSc/PhD or enrollment in a&nbsp;post-graduate program (MSc/PhD) with focus on Deep Learning/Machine Learning is a plus<br>- 3+ years of relevant experience<br>- Strong Machine Learning background<br>- Deep Learning background<br>- Web &amp; Mobile App development background is a plus<br>- Experience in Machine Learning Cloud Deployment is a plus<br>&nbsp;</p>
+career_level: Experienced (Non-Manager)
+```
