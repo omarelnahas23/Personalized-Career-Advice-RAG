@@ -1,4 +1,4 @@
-![](https://github.com/omarelnahas23/Personalized-Career-Advice-RAG/blob/main/assets/Screenshot_8.png)
+![](https://github.com/omarelnahas23/Personalized-Career-Advice-RAG/blob/main/assets/Screenshot_8.png))]
 <br><br>
 
 # **Introduction**
@@ -9,8 +9,22 @@ the solution is the RAG System for personal career advice based on sampled Wuzzu
 2. Ollama was utilized for speeding up models' performance
 3. LangChain was the framework used for building RAG Chains
 4. LLama3, Newly Released Gemma2 9b on Ollama was used
-5. Evaluation was done using LangSmith Evaluators and RAGAS based on OpenAI GPTs model was used for evaluation
+5. Evaluation was done using LangSmith Evaluators and RAGAS based on the OpenAI GPTs model was used for evaluation
 
+# **Installing Dependencies**
+either you follow the installation on the notebook<br>
+or you can install it if you are working on a local machine using 
+```markdown
+```python
+pip install -r requirements.txt
+```
+install Ollama and pull models
+```markdown
+```shell
+curl -fsSL https://ollama.com/install.sh | sh
+ollama serve
+ollama pull llama3 #Pulls LLama3 8B
+ollama pull gemma2 #Pulls New model Gemma2 9b
 
-
+```
 # 
