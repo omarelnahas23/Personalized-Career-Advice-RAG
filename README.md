@@ -1,1 +1,1 @@
-![My Project Logo](https://raw.githubusercontent.com/omarelnahas23/Personalized-Career-Advice-RAG/main/assets/Screenshot_8.png)
+![My Project Logo]([https://raw.githubusercontent.com/omarelnahas23/Personalized-Career-Advice-RAG/main/assets/Screenshot_8.png](https://github.com/omarelnahas23/Personalized-Career-Advice-RAG/blob/main/assets/Screenshot_8.png))
