@@ -36,8 +36,8 @@ I am utilizing the [LangChain](https://www.langchain.com/) Framework for buildin
 ![](https://github.com/omarelnahas23/Personalized-Career-Advice-RAG/blob/main/assets/llm-embedder.png)
 <br> <br> 
 LLMs face a series of challenges, including<br>
-issues such as hallucination , instruction following <br>
-and handling long contexts . Many of these challenges can be
+issues such as hallucination, instruction following <br>
+and handling long contexts. Many of these challenges can be
 traced back to the inherent limitations of LLMs, with three critical
 boundaries deserving attention.<br>
 • **Knowledge boundary**. LLMs are constrained by their knowledge capacity. Due to finite model parameters, they cannot fully
@@ -59,3 +59,23 @@ in terms of action and autonomy. Firstly, they are limited to the
 world. Secondly, these models heavily rely on human guidance,
 requiring clear user instructions and appropriate demonstration
 examples to perform specific tasks effectively.<br>
+
+The above inherent boundaries cannot be effectively addressed by LLMs alone. <br>
+To overcome these limitations, external assistance is sought through the process known as **retrieval-augmented generation**. <br>
+Retrievers play a crucial role in connecting LLMs with the necessary external components, enabling LLMs to accomplish various downstream tasks. <br>
+![](https://github.com/omarelnahas23/Personalized-Career-Advice-RAG/blob/main/assets/Screenshot_9.png)
+
+In this context, several common types of retrievers have been designed,<br>
+each tailored to fulfill a distinct role in enhancing LLMs:<br>
+• **Knowledge Retriever**: providing external knowledge to support LLMs in tackling knowledge-intensive tasks.<br>
+• Memory Retriever: collecting information that extends beyond the immediate context, assisting in the generation of lengthy
+sequences.<br>
+• **Tool Retriever**: selecting appropriate tools, allowing LLMs to
+interact effectively with the physical world.<br>
+• **Example Retriever**: locating pre-cached demonstration examples, from which LLM prompts can be automatically generated
+to facilitate in-context learning.<br>
+
+Based on this LLM-Embedder, a unified embedding model to satisfy the primary retrieval augmentation needs of LLMs. Unifying the diverse retrieval capabilities holds significant advantages.
+From a practical standpoint, LLM-based systems often require multiple external modules, such as knowledge bases, memory stores,
+and tool-bench, to execute complex tasks. By consolidating these functionalities into a unified model, we can streamline system management and enhance operational efficiency. From the perspective
+of effect, the unified model may also benefit from the composite data of different scenarios. This can be especially helpful for retrieval tasks where high-quality training data is scarce
