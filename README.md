@@ -303,3 +303,42 @@ description: <p>- Conduct state-of-the-art research in AI & Deep/Machine Learnin
 requirements: <p>- BSc in one of these fields: Computer Science, Computer Engineering, Electronics and Communications, Mechatronics, Biomedical or Bioinformatics<br>- MSc/PhD or enrollment in a&nbsp;post-graduate program (MSc/PhD) with focus on Deep Learning/Machine Learning is a plus<br>- 3+ years of relevant experience<br>- Strong Machine Learning background<br>- Deep Learning background<br>- Web &amp; Mobile App development background is a plus<br>- Experience in Machine Learning Cloud Deployment is a plus<br>&nbsp;</p>
 career_level: Experienced (Non-Manager)
 ```
+<br><br>
+# **Good To Keep in mind of Summarization**
+Retrieval results may contain redundant or unnecessary information, potentially preventing LLMs
+from generating accurate responses. Additionally, long prompts can slow down the inference process.
+Therefore, efficient methods to summarize retrieved documents are crucial in the RAG pipeline.
+Summarization tasks can be extractive or abstractive. Extractive methods segment text into sentences, then score and rank them based on importance. Abstractive compressors synthesize information from multiple documents to rephrase and generate a cohesive summary. These tasks can be
+query-based or non-query-based. In this paper, as RAG retrieves information relevant to queries, we
+focus exclusively on query-based methods.<br>
+![](https://github.com/omarelnahas23/Personalized-Career-Advice-RAG/blob/main/assets/LLMLingua_logo.png)
+<br><br>
+I am using Latest LongLLMLingua for this LLMLingua2<br>
+```python
+from llmlingua import PromptCompressor
+
+llm_lingua = PromptCompressor(
+    model_name="microsoft/llmlingua-2-xlm-roberta-large-meetingbank",
+    use_llmlingua2=True,
+)
+docs_txt = []
+for doc in compressed_docs:
+    docs_txt.append(doc.page_content)
+docs_txt = '\n\n'.join(docs_txt)
+# 2000 Compression
+compressed_prompt = llm_lingua.compress_prompt(
+    docs_txt,
+    rate=0.33,
+    force_tokens=["!", ".", "?", "\n"],
+    drop_consecutive=True,
+)
+# Reducing the size of the context of 33% 
+```
+<br>
+
+**can be useful if we are retrieving big amount of job positing and we need to summerize the context for the model**
+<br><br>
+# **Evaluation of Pipelines Using [RAGAs](https://docs.ragas.io/en/latest/getstarted/index.html)**
+![](https://github.com/omarelnahas23/Personalized-Career-Advice-RAG/blob/main/assets/Screenshot_1.png)
+
+
