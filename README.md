@@ -68,7 +68,7 @@ Retrievers play a crucial role in connecting LLMs with the necessary external co
 In this context, several common types of retrievers have been designed,<br>
 each tailored to fulfill a distinct role in enhancing LLMs:<br>
 • **Knowledge Retriever**: providing external knowledge to support LLMs in tackling knowledge-intensive tasks.<br>
-• Memory Retriever: collecting information that extends beyond the immediate context, assisting in the generation of lengthy
+• **Memory Retriever**: collecting information that extends beyond the immediate context, assisting in the generation of lengthy
 sequences.<br>
 • **Tool Retriever**: selecting appropriate tools, allowing LLMs to
 interact effectively with the physical world.<br>
@@ -78,4 +78,23 @@ to facilitate in-context learning.<br>
 Based on this LLM-Embedder, a unified embedding model to satisfy the primary retrieval augmentation needs of LLMs. Unifying the diverse retrieval capabilities holds significant advantages.
 From a practical standpoint, LLM-based systems often require multiple external modules, such as knowledge bases, memory stores,
 and tool-bench, to execute complex tasks. By consolidating these functionalities into a unified model, we can streamline system management and enhance operational efficiency. From the perspective
-of effect, the unified model may also benefit from the composite data of different scenarios. This can be especially helpful for retrieval tasks where high-quality training data is scarce
+of effect, the unified model may also benefit from the composite data of different scenarios. This can be especially helpful for retrieval tasks where high-quality training data is scarce <br>
+
+Here is how LLM Embedder is loaded to the RAG Chain:<br>
+```markdown
+from langchain_huggingface.embeddings import HuggingFaceEmbeddings
+
+model_name = "BAAI/llm-embedder"
+embd = HuggingFaceEmbeddings(
+    model_name=model_name,
+)
+```
+<br><br>
+![](https://github.com/omarelnahas23/Personalized-Career-Advice-RAG/blob/main/assets/LLM-Embedder-Comparision.png)
+
+
+# **Vectorstore Creation and loading using Milvus**
+![](https://github.com/omarelnahas23/Personalized-Career-Advice-RAG/blob/main/assets/998c09ca-cfa6-4c01-ac75-3dfad7f4862b.png)
+<br>
+**Milvus** stands out as the most comprehensive solution among the databases evaluated, meeting all the essential criteria and outperforming other open-source options
+![](https://github.com/omarelnahas23/Personalized-Career-Advice-RAG/blob/main/assets/VectorDB%20Comparision.png)
