@@ -2,7 +2,7 @@
 <br><br>
 
 # **Introduction**
-the solution is the RAG System for personal career advice based on sampled Wuzzuf job postings utilizing SOTA approaches for data indexing, retrieval, and Quality Generation for advice 
+the solution is the RAG System for personal career advice based on sampled job postings utilizing SOTA approaches for data indexing, retrieval, and Quality Generation for advice 
 
 # **Environment, Frameworks and Deployment**
 1. Kaggle for Notebook hosting using its GPU Accelerator <br>
